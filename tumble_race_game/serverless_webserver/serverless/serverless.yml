@@ -15,8 +15,8 @@ provider:
         - "dynamodb:Scan"
         - "dynamodb:Query"
       Resource:
-        - "arn:aws:dynamodb:us-east-1:*:table/seeker-events-connections"
-        - "arn:aws:dynamodb:us-east-1:*:table/seeker-events-auth"
+        - "arn:aws:dynamodb:us-east-1:*:table/connections"
+        - "arn:aws:dynamodb:us-east-1:*:table/auth"
 
     - Effect: Allow
       Action:
@@ -25,7 +25,6 @@ provider:
         - "kinesis:DescribeStream"
         - "kinesis:ListStreams"
       Resource:
-        - "arn:aws:kinesis:us-east-1:*:stream/seeker-events"
         - "arn:aws:kinesis:us-east-1:*:stream/iot-events"
 
     - Effect: Allow
@@ -44,7 +43,7 @@ provider:
         - "ssm:GetParameter"
         - "ssm:GetParameters"
       Resource:
-        - "arn:aws:ssm:us-east-1:*:parameter/app/seeker-events/*"
+        - "arn:aws:ssm:us-east-1:*:parameter/app/iot-events/*"
 
 package:
     individually: true
