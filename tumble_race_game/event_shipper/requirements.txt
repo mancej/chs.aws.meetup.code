@@ -1,0 +1,6 @@
+pyobjc-framework-Quartz
+inputs
+boto3
+pygame
+pyaudio
+websocket-client
