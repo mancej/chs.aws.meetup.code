@@ -19,7 +19,6 @@ resource "aws_dynamodb_table" "connections" {
 
   tags {
     Name        = "connections"
-    Environment = "${data.terraform_remote_state.config.run_env}"
     owner = "devops"
     application = "devops.ci"
   }
@@ -41,7 +40,6 @@ resource "aws_dynamodb_table" "_auth" {
 
   tags {
     Name        = "auth"
-    Environment = "${data.terraform_remote_state.config.run_env}"
     owner = "devops"
     application = "devops.ci"
   }

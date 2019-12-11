@@ -3,7 +3,7 @@ import wave
 import logging
 import boto3
 import os
-from joystick_config import *
+from config import *
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)

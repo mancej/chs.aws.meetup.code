@@ -9,4 +9,4 @@ if [ -n "$color_override" ]; then
     export COLOR_OVERRIDE=$color_override
 fi
 
-python joystick_game.py
+python main.py

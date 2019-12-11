@@ -5,7 +5,7 @@ import uuid
 import json
 import websocket
 from typing import Dict
-from joystick_config import *
+from config import *
 from typing import List
 from input.nes_event import NESEvent
 from multiprocessing import Queue

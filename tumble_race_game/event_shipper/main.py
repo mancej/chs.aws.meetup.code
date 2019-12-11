@@ -14,7 +14,7 @@ from websocket import WebSocketApp
 from pprint import pprint
 import random
 import os
-from joystick_config import *
+from config import *
 
 root_logger = logging.getLogger()
 root_logger.setLevel(logging.INFO)
