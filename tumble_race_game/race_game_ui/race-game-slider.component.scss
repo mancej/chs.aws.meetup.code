@@ -1,0 +1,59 @@
+// We need to use ::ng-deep to overcome view encapsulation
+
+$cropped_image_url: var(--cropped-image-url);
+$rotate_percent: var(--rotate-percent);
+
+::ng-deep {
+
+
+  .custom-slider .ng5-slider .ng5-slider-bar {
+    background: #ffe4d1;
+    height: 13px;
+
+  }
+  .custom-slider .ng5-slider .ng5-slider-selection {
+    background: orange;
+  }
+
+  .ng5-slider-selection {
+    background: blue;
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-pointer {
+    width: 40px;
+    height: 40px;
+    margin-left: 30px;
+    bottom: 3px;
+    //top: auto; /* to remove the default positioning */
+    content: $cropped_image_url;
+    transform: rotate($rotate_percent);
+    border-radius: 10px;
+    background-color: transparent;
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-pointer:after {
+    display: none;
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-bubble {
+    bottom: 14px;
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-limit {
+    font-weight: bold;
+    color: orange;
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-tick {
+    width: 1px;
+    height: 10px;
+    margin-left: 4px;
+    border-radius: 0;
+    background: #ffe4d1;
+    top: -1px;
+  }
+
+  .custom-slider .ng5-slider .ng5-slider-tick.ng5-slider-selected {
+    background: orange;
+  }
+}

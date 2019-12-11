@@ -1,0 +1,158 @@
+<div id="none-card"></div>
+<div *ngIf="show_microphone" class="microphone_container">
+    <img class="microphone_img" src="assets/images/Recording.gif">
+</div>
+<div *ngIf="show_microphone" class="mic_overlay"></div>
+
+
+<mat-card style="width:98%; float: left; ">
+    <mat-card-content style="width:100%; float:left; padding-top: 15px; text-align: center;">
+        <div *ngIf="winner">
+            <span [ngStyle]="{'color': winner_color, 'font-size': '90px', 'font-weight': 'bold'}">
+              {{ winner_text }}
+            </span>
+        </div>
+        <div *ngIf="paused && !winner">
+            <span style="color: #fc4c66; font-size: 50px; font-weight: bold;">
+              {{ paused_text }}
+            </span>
+        </div>
+        <div *ngIf="!paused">
+              <span *ngFor="let button of TARGET_BUTTONS"
+                    style="color: #44d478; font-size: 50px; font-weight: bold; ">
+                  {{ button }}&nbsp;&nbsp;
+              </span>
+        </div>
+        <span class="reset_text">RESET CODE</span>
+        <span class="reset_code">SELECT -> START -> B -> A</span>
+    </mat-card-content>
+
+</mat-card>
+
+<mat-card id="red-card" class="user_bar_card">
+    <mat-card-content class="mat_gauge_image">
+        <rg-gauge-chart style="float: left;"
+            [canvasWidth]="150"
+            [needleValue]="model.get_state('red').gauge_val"
+            [options]="model.get_state('red').gauge_options"
+            [name]="model.get_state('red').gauge_name"
+            [bottomLabel]="model.get_state('red').gauge_bottom"
+            [centralLabel]="model.get_state('red').gauge_val_str()">
+        </rg-gauge-chart>
+    </mat-card-content>
+    <mat-card-content class="mat_user_image">
+        <img [src]="model.get_state('red').img" class="user_image"
+             [ngStyle]="{'float': 'left', 'transform': 'rotate(90deg)', 'border': '3px solid', 'border-color': [RED]}"/>
+    </mat-card-content>
+    <mat-card-content class="slider_card">
+        <span class="racer-name">{{ model.get_state('red').emotion_confidence }}% {{ model.get_state('red').emotion }}&nbsp;{{ model.get_state('red').name }}</span>
+        <race-game-slider id='red-slider' [value]="model.get_state('red').val"
+                          [options]="model.get_state('red').options"></race-game-slider>
+        <div *ngIf="kinesis_enabled">
+            <race-game-slider id='kinesis-red-slider' [value]="model.get_state('red').kinesis_val"
+                              [options]="model.get_state('red').kinesis_bar_options"></race-game-slider>
+        </div>
+    </mat-card-content>
+    <mat-card-content  class="mat_reset_image">
+        <img [src]="model.get_state('red').reset_img" class="reset_image"/>
+    </mat-card-content>
+    <mat-card-content class="mat_action_image">
+        <img [src]="model.get_state('red').action_img"/>
+    </mat-card-content>
+</mat-card>
+
+<mat-card id="blue-card" class="user_bar_card">
+    <mat-card-content class="mat_gauge_image">
+        <rg-gauge-chart style="float: left;"
+            [canvasWidth]="150"
+            [needleValue]="model.get_state('blue').gauge_val"
+            [options]="model.get_state('blue').gauge_options"
+            [name]="model.get_state('blue').gauge_name"
+            [bottomLabel]="model.get_state('blue').gauge_bottom"
+            [centralLabel]="model.get_state('blue').gauge_val_str()">
+        </rg-gauge-chart>
+    </mat-card-content>
+    <mat-card-content class="mat_user_image">
+        <img [src]="model.get_state('blue').img" class="user_image"
+             [ngStyle]="{'float': 'left', 'transform': 'rotate(90deg)', 'border': '3px solid', 'border-color': [BLUE]}"/>
+    </mat-card-content>
+    <mat-card-content class="slider_card">
+        <span class="racer-name">{{ model.get_state('blue').emotion_confidence }}% {{ model.get_state('blue').emotion }}&nbsp;{{ model.get_state('blue').name }}</span>
+        <race-game-slider id='blue-slider' [value]="model.get_state('blue').val"
+                          [options]="model.get_state('blue').options"></race-game-slider>
+        <div *ngIf="kinesis_enabled">
+            <race-game-slider id='kinesis-blue-slider' [value]="model.get_state('blue').kinesis_val"
+                              [options]="model.get_state('blue').kinesis_bar_options"></race-game-slider>
+        </div>
+    </mat-card-content>
+    <mat-card-content  class="mat_reset_image">
+        <img [src]="model.get_state('blue').reset_img" class="reset_image"/>
+    </mat-card-content>
+    <mat-card-content class="mat_action_image">
+        <img [src]="model.get_state('blue').action_img"/>
+    </mat-card-content>
+</mat-card>
+
+<mat-card id="green-card" class="user_bar_card">
+    <mat-card-content class="mat_gauge_image">
+        <rg-gauge-chart style="float: left;"
+            [canvasWidth]="150"
+            [needleValue]="model.get_state('green').gauge_val"
+            [options]="model.get_state('green').gauge_options"
+            [name]="model.get_state('green').gauge_name"
+            [bottomLabel]="model.get_state('green').gauge_bottom"
+            [centralLabel]="model.get_state('green').gauge_val_str()">
+        </rg-gauge-chart>
+    </mat-card-content>
+    <mat-card-content class="mat_user_image">
+        <img [src]="model.get_state('green').img" class="user_image"
+             [ngStyle]="{'float': 'left', 'transform': 'rotate(90deg)', 'border': '3px solid', 'border-color': [GREEN]}"/>
+    </mat-card-content>
+    <mat-card-content class="slider_card">
+        <span class="racer-name">{{ model.get_state('green').emotion_confidence }}% {{ model.get_state('green').emotion }}&nbsp;{{ model.get_state('green').name }}</span>
+        <race-game-slider id='green-slider' [value]="model.get_state('green').val"
+                          [options]="model.get_state('green').options"></race-game-slider>
+        <div *ngIf="kinesis_enabled">
+            <race-game-slider id='kinesis-green-slider' [value]="model.get_state('green').kinesis_val"
+                              [options]="model.get_state('green').kinesis_bar_options"></race-game-slider>
+        </div>
+    </mat-card-content>
+    <mat-card-content class="mat_reset_image">
+        <img [src]="model.get_state('green').reset_img" class="reset_image"/>
+    </mat-card-content>
+    <mat-card-content class="mat_action_image">
+        <img [src]="model.get_state('green').action_img"/>
+    </mat-card-content>
+</mat-card>
+
+<mat-card id="yellow-card" class="user_bar_card">
+    <mat-card-content class="mat_gauge_image">
+        <rg-gauge-chart style="float: left;"
+            [canvasWidth]="150"
+            [needleValue]="model.get_state('yellow').gauge_val"
+            [options]="model.get_state('yellow').gauge_options"
+            [name]="model.get_state('yellow').gauge_name"
+            [bottomLabel]="model.get_state('yellow').gauge_bottom"
+            [centralLabel]="model.get_state('yellow').gauge_val_str()">
+        </rg-gauge-chart>
+    </mat-card-content>
+    <mat-card-content class="mat_user_image">
+        <img [src]="model.get_state('yellow').img" class="user_image"
+             [ngStyle]="{'float': 'left', 'transform': 'rotate(90deg)', 'border': '3px solid', 'border-color': [YELLOW]}"/>
+    </mat-card-content>
+    <mat-card-content class="slider_card">
+        <span class="racer-name">{{ model.get_state('yellow').emotion_confidence }}% {{ model.get_state('yellow').emotion }}&nbsp;{{ model.get_state('yellow').name }}</span>
+        <race-game-slider id='yellow-slider' [value]="model.get_state('yellow').val"
+                          [options]="model.get_state('yellow').options"></race-game-slider>
+        <div *ngIf="kinesis_enabled">
+            <race-game-slider id='kinesis-yellow-slider' [value]="model.get_state('yellow').kinesis_val"
+                              [options]="model.get_state('yellow').kinesis_bar_options"></race-game-slider>
+        </div>
+    </mat-card-content>
+    <mat-card-content  class="mat_reset_image">
+        <img [src]="model.get_state('yellow').reset_img" class="reset_image"/>
+    </mat-card-content>
+    <mat-card-content class="mat_action_image">
+        <img [src]="model.get_state('yellow').action_img"/>
+    </mat-card-content>
+</mat-card>

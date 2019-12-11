@@ -1,0 +1,11 @@
+{
+  "name": "socket-manager",
+  "description": "",
+  "version": "0.1.0",
+  "dependencies": {
+    "serverless-package-python-functions": "^0.5.1"
+  },
+  "devDependencies": {
+    "serverless-python-requirements": "^5.0.1"
+  }
+}

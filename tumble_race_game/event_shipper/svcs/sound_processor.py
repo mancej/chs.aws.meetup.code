@@ -3,6 +3,7 @@ import wave
 import logging
 import boto3
 import os
+from joystick_config import *
 
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
@@ -22,15 +23,14 @@ class SoundProcessor:
 
     def record(self, duration: int, file_name: str):
         stream = self._pyaudio.open(format=self.FORMAT,
-                        channels=self.CHANNELS,
-                        rate=self.FS,
-                        frames_per_buffer=self.CHUNK,
-                        input=True)
+                                    channels=self.CHANNELS,
+                                    rate=self.FS,
+                                    frames_per_buffer=self.CHUNK,
+                                    input=True)
 
         log.info('########################################')
         log.info('######## Recording STARTED #############')
         log.info('########################################')
-
 
         frames = []  # Initialize array to store frames
 
@@ -56,11 +56,8 @@ class SoundProcessor:
         wf.close()
 
         log.info("Copying file!")
-        s3_obj = self._s3.Object('saj-prod-devops-ui', f'audio-uploads/{file_name}')
+        s3_obj = self._s3.Object(UPLOAD_BUCKET, f'audio-uploads/{file_name}')
         s3_obj.upload_file(file_path)
         log.info("File copied!")
 
         # os.remove(file_path)
-
-
-

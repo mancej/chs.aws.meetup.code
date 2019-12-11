@@ -1,0 +1,9 @@
+--extra-index-url https://repo.fury.io/${GEMFURY_DEPLOY_TOKEN}/snagajob/
+
+requests
+boto3==1.9.173
+botocore==1.12.215
+sty==1.0.0b12
+
+# snag internal
+websocket-format-client==1.0.4

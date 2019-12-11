@@ -1,0 +1,127 @@
+//.mat-card-content {
+//    background: #3f3f3f;
+//}
+//
+//.mat-card {
+//    background: #3f3f3f;
+//}
+//
+
+$selection_color: var(--selection-color, white);
+
+
+.racer-name {
+  font-weight: bold;
+  font-size: large;
+  font-family: "Hack Nerd Font";
+  margin-left: 10px;
+  vertical-align: top;
+}
+
+
+.user_bar_card {
+  height: 18%;
+  width: 100%;
+  float: left;
+  margin: 0;
+  padding: 15px;
+  background-color: $selection_color;
+}
+
+.user_image {
+  //height: 125px;
+  width: 100%;
+  float: left;
+}
+
+.slider_card {
+  width:65%;
+  float: left;
+  //padding-left: 35px;
+  //padding-top: 25px;
+  padding-bottom: 20px;
+}
+
+.mat_action_image {
+  width: 8%;
+  height: 15%;
+  float: left;
+  padding-top:30px;
+}
+
+.mat_reset_image {
+  width: 5%;
+  height: 15%;
+  float: left;
+}
+
+.mat_gauge_image {
+  width: 8%;
+  height: 15%;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+.mat_user_image {
+  width: 10%;
+  height: 15%;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+.action_image {
+  float: left;
+  width:100%;
+}
+
+.reset_image {
+  float: left;
+  width: 90%;
+  padding-top: 25%;
+}
+
+.reset_text {
+  float: left;
+  color: #00d5ff;
+  padding-left: 83%;
+  font-size: 25px;
+  font-weight: bold;
+  font-family: "Hack Nerd Font";
+}
+
+.reset_code {
+  float:left;
+  color: #fc4c66;
+  padding-left: 78%;
+  font-size: 20px;
+  font-family: "Hack Nerd Font";
+}
+
+.microphone_img {
+  height: 100%;
+  width: 100%;
+}
+
+.microphone_container {
+    position:  fixed;
+    top: 200px;
+    left: 50%;
+    width: 375px;
+    background: white;
+    margin-left: -187.5px;
+    text-align: center;
+    box-shadow: 0px 0px 2px 1px black;
+    z-index: 100;
+}
+
+.mic_overlay {
+    position: absolute;
+    top: 0px;
+    left:  0px;
+    z-index:  99;
+    background:  rgba(0,0,0,0.8);
+    width:  100%;
+    height: 100%;
+}

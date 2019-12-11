@@ -1,0 +1,133 @@
+service: socket-manager
+
+provider:
+  name: aws
+  runtime: python3.7
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - "dynamodb:PutItem"
+        - "dynamodb:GetItem"
+        - "dynamodb:UpdateItem"
+        - "dynamodb:DeleteItem"
+        - "dynamodb:BatchGetItem"
+        - "dynamodb:BatchWriteItem"
+        - "dynamodb:Scan"
+        - "dynamodb:Query"
+      Resource:
+        - "arn:aws:dynamodb:us-east-1:*:table/seeker-events-connections"
+        - "arn:aws:dynamodb:us-east-1:*:table/seeker-events-auth"
+
+    - Effect: Allow
+      Action:
+        - "kinesis:GetRecords"
+        - "kinesis:GetShardIterator"
+        - "kinesis:DescribeStream"
+        - "kinesis:ListStreams"
+      Resource:
+        - "arn:aws:kinesis:us-east-1:*:stream/seeker-events"
+        - "arn:aws:kinesis:us-east-1:*:stream/iot-events"
+
+    - Effect: Allow
+      Action:
+        - "logs:CreateLogGroup"
+        - "logs:CreateLogStream"
+        - "logs:PutLogEvents"
+        - "ec2:CreateNetworkInterface"
+        - "ec2:DescribeNetworkInterfaces"
+        - "ec2:DeleteNetworkInterface"
+      Resource:
+        - "*"
+
+    - Effect: Allow
+      Action:
+        - "ssm:GetParameter"
+        - "ssm:GetParameters"
+      Resource:
+        - "arn:aws:ssm:us-east-1:*:parameter/app/seeker-events/*"
+
+package:
+    individually: true
+
+plugins:
+  - serverless-package-python-functions
+
+custom:
+  pkgPyFuncs:
+    buildDir: _build
+    requirementsFile: 'requirements.txt'
+    globalRequirements:
+      - ./requirements.txt
+    globalIncludes:
+      - ./lib
+    cleanup: true
+
+
+functions:
+  connection_manager:
+    name: socket-connection-manager
+    handler: main.handle
+    timeout: 240
+    memorySize: 128
+    events:
+      - websocket:
+          route: $connect
+      - websocket:
+          route: $disconnect
+    package:
+      include:
+        - functions/connection_manager
+      artifact: ${self:custom.pkgPyFuncs.buildDir}/socket-connection-manager.zip
+
+  default_message:
+    name: socket-default-message
+    memorySize: 128
+    handler: main.handle
+    events:
+      - websocket:
+          route: $default
+    package:
+      include:
+        - functions/default_message
+      artifact: ${self:custom.pkgPyFuncs.buildDir}/socket-default-message.zip
+
+  subscribe:
+    name: socket-subscribe
+    memorySize: 128
+    handler: main.handle
+    events:
+      - websocket:
+          route: subscribe
+    package:
+      include:
+        - functions/subscribe
+      artifact: ${self:custom.pkgPyFuncs.buildDir}/socket-subscribe.zip
+
+  send_iot_message:
+    name: socket-send-iot-message
+    handler: main.handle
+    timeout: 120
+    memorySize: 1508
+    events:
+      - stream:
+          arn: arn:aws:kinesis:us-east-1:${ssm:/shared/devops/account_id}:stream/iot-events
+          batchSize: 1000
+          startingPosition: LATEST
+          enabled: true
+    package:
+      include:
+        - functions/send_iot_message
+      artifact: ${self:custom.pkgPyFuncs.buildDir}/socket-send-iot-message.zip
+
+  submit_iot_event:
+    name: socket-submit-iot-event
+    memorySize: 128
+    handler: main.handle
+    events:
+      - websocket:
+          route: submitIotEvent
+    package:
+      include:
+        - functions/submit_iot_event
+      artifact: ${self:custom.pkgPyFuncs.buildDir}/socket-submit-iot-event.zip
+
